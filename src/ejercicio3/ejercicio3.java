@@ -1,101 +1,77 @@
 package ejercicio3;
 
-import java.util.Arrays;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
-public class ejercicio3 {
+public class Ejercicio3 {
 
-    public static void main(String[] args) {
+    // Leer num + hasta introducir un num negativo
+    // Almacenar el num en el fichero "Tres.dat" OJO
+    // USANDO OBJECTS
 
-      Scanner teclado = new Scanner(System.in);
-      Alumno[] alumnos = new Alumno[3];
-      String[] asig = new String[3];
-      String nombre;
+    public static void main(String[] args) throws IOException {
 
-      for (int al = 0; al < 3; al++){
-        System.out.println("Creación alumno " + al);
-        System.out.println("Nombre");
-        nombre = teclado.nextLine();
+        Scanner teclado = new Scanner(System.in);
+        ObjectOutputStream escritor = null;
+        try {
+            escritor = new ObjectOutputStream(new FileOutputStream("src//Ejercicio3//Tres.dat"));
+            System.out.println("Introduce número:");
+            Integer num = teclado.nextInt();
 
-        for (int j = 0; j < 3; j++) {
-            System.out.println("Asignatura " + j + ": "); 
-            asig[j] = teclado.nextLine();
+            while (num > -1) {
+                escritor.writeObject(num);
+                System.out.println("Introduce número:");
+                num = teclado.nextInt();
 
+            }
+
+        } catch (FileNotFoundException e) {
+            e.getMessage();
+
+        } finally {
+            if (escritor != null) {
+                escritor.close();
+
+            }
         }
 
-        alumnos[al] = new Alumno(nombre, asig);
+        ObjectInputStream lector = null;
+        escritor = null;
 
+        try {
+            lector = new ObjectInputStream(new FileInputStream("src//Ejercicio3//Tres.dat"));
+            escritor = new ObjectOutputStream(new FileOutputStream("src//Ejercicio3//Trescopia.dat"));
+            Integer escribir;
+            System.out.println(lector.available());
 
-      }
+            while (lector.available() > 0) {
+                escribir = (Integer) lector.readObject();
+                escritor.writeObject(escribir);
+                System.out.println(escribir);
 
-      for (int cont = 0; cont < 3; cont++) {
-        System.out.println(alumnos[cont].getId());
+            }
 
-      }
+        } catch (FileNotFoundException | ClassNotFoundException e) {
+            e.getMessage();
 
-      System.out.println(Alumno.getidActual());
+        } finally {
+            if (lector != null) {
+                lector.close();
 
-      teclado.close();
+            }
 
-       
-       
+            if (escritor != null) {
+                escritor.close();
 
-    }
+            }
+        }
 
-}
-
-class Alumno {
-
-    // Atributos
-
-    private static int idActual = 0;
-    private int id;
-    private String nombre;
-    private String[] asignaturas;
-
-    // constructor
-
-    public Alumno(String nombre, String[] asignaturas) {
-        idActual++;
-        this.id = idActual;
-        this.nombre = nombre;
-        this.asignaturas = asignaturas;
-
-    }
-
-    // Getters y Setters
-
-    public static int getidActual() {
-        return idActual;
-    }
-
-    
-
-    public int getId() {
-        return id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String[] getAsignaturas() {
-        return asignaturas;
-    }
-
-    public void setAsignaturas(String[] asignaturas) {
-        this.asignaturas = asignaturas;
-    }
-
-    // ToString
-
-    public void escribir() {
-        System.out.println(
-                "Alumno [id=" + id + ", nombre=" + nombre + ", asignaturas=" + Arrays.toString(asignaturas) + "]");
+        teclado.close();
 
     }
 
