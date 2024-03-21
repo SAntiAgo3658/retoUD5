@@ -1,4 +1,4 @@
-package teoriaUD5;
+package practicasClase;
 
 public class ListasJava {
 
@@ -28,13 +28,17 @@ class NodoListaInt {
 
     // Métodos
 
+    /**
+     * @param nuevoNodo
+     * @return
+     */
     public NodoListaInt add(NodoListaInt nuevoNodo) {
 
         if (this.sig == null) {
-            this.sig = nuevoNodo;
+           return this.sig = nuevoNodo;
 
         } else {
-            this.sig.add(nuevoNodo);
+           return this.sig.add(nuevoNodo);
 
         }
 

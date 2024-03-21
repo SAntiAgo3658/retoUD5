@@ -2,7 +2,7 @@ package ejercicio4;
 
 import java.io.Serializable;
 
-public class Persona implements Serializable {
+public class Persona implements Serializable, Comparable {
 
     // Atributos
 
@@ -11,13 +11,21 @@ public class Persona implements Serializable {
     private String apellidos;
     private int edad;
 
-    // Constructor
+    // Constructores
 
     public Persona() {
         this.dni = null;
         this.nombre = null;
         this.apellidos = null;
         this.edad = -1;
+
+    }
+
+    public Persona(String dni, String nombre, String apellidos, int edad) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.edad = edad;
 
     }
 
@@ -68,6 +76,29 @@ public class Persona implements Serializable {
     @Override
     public String toString() {
         return "Persona [dni=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", edad=" + edad + "]";
+
+    }
+
+    public int compareTo(Object object) {
+
+        if (object.getClass() != this.getClass()) {
+            return 1; // Si el parámetro no es una persona.
+
+        } else {
+            Persona persona = (Persona) object;
+
+            if (this.edad > persona.edad) {
+                return 1; // Si mi objeto es mejor.
+
+            } else if (this.edad == persona.edad) {
+                return 0; // Si son iguales.
+
+            } else {
+                return -1; // Si mi objeto es peor.
+
+            }
+
+        }
 
     }
 
