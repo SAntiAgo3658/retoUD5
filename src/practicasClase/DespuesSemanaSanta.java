@@ -7,12 +7,14 @@ public class DespuesSemanaSanta {
         Staff[] staffs = new Staff[10];
 
         for (int i = 0; i < staffs.length; i++) {
-            Staff staff = new Staff("Paco");
+            Staff staff = new Staff("José Ramón Garrido Rodríguez");
             staffs[i] = staff;
+            System.out.println(staffs[i].getNombre().toUpperCase());
+            System.out.println(staffs[i].getNombre());
 
         }
 
-        System.out.println(Staff.getCont() == staffs.length);
+        
 
     }
 
